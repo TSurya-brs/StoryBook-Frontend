@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom"; // Import useNavigate instead of useHistory
+import { useNavigate, Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isAuthor, setIsAuthor] = useState(false); // Added state for isAuthor checkbox
+  const [isAuthor, setIsAuthor] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const navigate = useNavigate(); // useNavigate hook for navigation
+  const navigate = useNavigate();
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation checks
     if (!firstName || !lastName || !email || !password) {
       setError("Please fill in all fields");
       return;
     }
 
-    // Check for valid email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
@@ -37,16 +34,15 @@ const RegisterPage = () => {
           last_name: lastName,
           email: email,
           password: password,
-          isAuthor: isAuthor, // Send the isAuthor value to the backend
+          isAuthor: isAuthor,
         }
       );
 
       setSuccessMessage(response.data.message);
       setError("");
 
-      // Redirect user to login page after successful registration
       setTimeout(() => {
-        navigate("/login"); // use navigate instead of history.push
+        navigate("/login");
       }, 3000);
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
@@ -119,7 +115,6 @@ const RegisterPage = () => {
             />
           </div>
 
-          {/* Checkbox for isAuthor */}
           <div className="mb-4">
             <label className="flex items-center text-gray-700 font-semibold">
               <input
@@ -139,7 +134,6 @@ const RegisterPage = () => {
             Register
           </button>
         </form>
-        {/* Navigation to Login */}
         <div className="text-center mt-4">
           <p className="text-gray-700">
             Already have an account?{" "}

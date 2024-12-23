@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import EditStoriesPage from "./EditStoriesPage"; // Import the EditPage modal
+import EditStoriesPage from "./EditStoriesPage";
 
 const AuthorStoriesPage = () => {
   const [myStories, setMyStories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [commentsVisible, setCommentsVisible] = useState({});
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to manage modal visibility
-  const [selectedStoryId, setSelectedStoryId] = useState(null); // State to store selected story ID
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedStoryId, setSelectedStoryId] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch stories authored by the user
   useEffect(() => {
     const fetchMyStories = async () => {
       const token = localStorage.getItem("authToken");
@@ -45,7 +44,6 @@ const AuthorStoriesPage = () => {
     navigate(`/delete/${storyId}`);
   };
 
-  // Toggle visibility of comments for a story
   const toggleComments = (storyId) => {
     setCommentsVisible((prev) => ({
       ...prev,
@@ -53,7 +51,6 @@ const AuthorStoriesPage = () => {
     }));
   };
 
-  // Callback function to update the list of stories after editing
   const updateStoryInList = (updatedStory) => {
     setMyStories((prevStories) =>
       prevStories.map((story) =>
@@ -62,15 +59,14 @@ const AuthorStoriesPage = () => {
     );
   };
 
-  // Handle edit button click and open the modal
   const handleEditClick = (storyId) => {
     setSelectedStoryId(storyId);
-    setIsEditModalOpen(true); // Open the edit modal
+    setIsEditModalOpen(true);
   };
 
   const closeModal = () => {
     setIsEditModalOpen(false);
-    setSelectedStoryId(null); // Reset the selected story ID
+    setSelectedStoryId(null);
   };
 
   return (
@@ -81,13 +77,11 @@ const AuthorStoriesPage = () => {
           <div className="text-red-500 text-center mb-4">{errorMessage}</div>
         )}
 
-        {/* Check if there are no stories */}
         {myStories.length === 0 ? (
           <div className="text-center text-gray-500 mt-8">
             No stories available.
           </div>
         ) : (
-          // Stories List
           <div className="space-y-6">
             {myStories.map((story) => (
               <div
@@ -107,7 +101,6 @@ const AuthorStoriesPage = () => {
                   {(story.comments && story.comments.length) || 0}
                 </p>
 
-                {/* View Comments Section */}
                 <div className="mt-4">
                   <button
                     onClick={() => toggleComments(story._id)}
@@ -134,7 +127,6 @@ const AuthorStoriesPage = () => {
                   )}
                 </div>
 
-                {/* Edit and Delete Buttons */}
                 <div className="mt-4 flex items-center space-x-4">
                   <button
                     onClick={() => handleEditClick(story._id)}
@@ -155,7 +147,6 @@ const AuthorStoriesPage = () => {
         )}
       </div>
 
-      {/* Edit Modal */}
       {isEditModalOpen && (
         <EditStoriesPage
           storyId={selectedStoryId}

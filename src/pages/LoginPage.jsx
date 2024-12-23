@@ -30,13 +30,11 @@ const LoginPage = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation checks
     if (!email || !password) {
       setError("Please fill in both email and password");
       return;
     }
 
-    // Check for valid email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
@@ -59,8 +57,8 @@ const LoginPage = ({ onLogin }) => {
       localStorage.setItem("userId", response.data.userId);
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("isAuthor", response.data.isAuthor);
-      localStorage.setItem("userEmail", response.data.email1); // Store email
-      localStorage.setItem("userName", response.data.name); // Store username
+      localStorage.setItem("userEmail", response.data.email1);
+      localStorage.setItem("userName", response.data.name);
       localStorage.setItem("flag", 1);
       // const email11 = localStorage.getItem("userEmail");
       // console.log("email", email11);
@@ -73,7 +71,7 @@ const LoginPage = ({ onLogin }) => {
       setIsAuthor(isAuthor);
 
       setTimeout(() => {
-        navigate("/nav"); // Redirect to a default page
+        navigate("/nav");
       }, 3000);
     } catch (err) {
       console.error("Error occurred:", err);
@@ -93,7 +91,6 @@ const LoginPage = ({ onLogin }) => {
     }
   };
 
-  // Run this check on page load
   React.useEffect(() => {
     checkIfAuthor();
   }, []);

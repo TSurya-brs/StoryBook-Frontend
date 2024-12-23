@@ -12,7 +12,6 @@ const AccountPage = () => {
     setUserEmail(email);
     setUserName(name);
 
-    // Logging the values to check
     // console.log("Email from localStorage: ", email);
     // console.log("Name from localStorage: ", name);
   }, []);

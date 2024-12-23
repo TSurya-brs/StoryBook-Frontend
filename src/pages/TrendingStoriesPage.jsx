@@ -8,7 +8,6 @@ const TrendingPage = () => {
   const [newComment, setNewComment] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Fetch trending stories
   useEffect(() => {
     const fetchTrendingStories = async () => {
       try {
@@ -25,7 +24,6 @@ const TrendingPage = () => {
     fetchTrendingStories();
   }, []);
 
-  // Toggle visibility of comments for a story
   const toggleComments = (storyId) => {
     setCommentsVisible((prev) => ({
       ...prev,
@@ -33,7 +31,6 @@ const TrendingPage = () => {
     }));
   };
 
-  // Handle change in the new comment input field
   const handleCommentChange = (storyId, event) => {
     setNewComment((prev) => ({
       ...prev,
@@ -41,7 +38,6 @@ const TrendingPage = () => {
     }));
   };
 
-  // Handle comment submission for a story
   const handleCommentSubmit = async (storyId) => {
     const comment = newComment[storyId];
 
@@ -67,7 +63,6 @@ const TrendingPage = () => {
         }
       );
 
-      // Update the story with new comment
       setTrendingStories((prevStories) =>
         prevStories.map((story) =>
           story._id === storyId
@@ -76,7 +71,6 @@ const TrendingPage = () => {
         )
       );
 
-      // Clear the new comment field
       setNewComment((prev) => ({
         ...prev,
         [storyId]: "",
@@ -115,13 +109,7 @@ const TrendingPage = () => {
                 <p className="text-sm text-gray-800 mb-2">
                   Author: {story.author}
                 </p>
-                {/* <div className="flex items-center justify-between mt-4">
-                  <span className="text-lg text-gray-800">
-                    Likes: {story.likes}
-                  </span>
-                </div> */}
 
-                {/* Comment Box */}
                 <div className="mt-4">
                   <button
                     onClick={() => toggleComments(story._id)}
@@ -152,7 +140,6 @@ const TrendingPage = () => {
                         <p className="text-gray-500">No comments yet.</p>
                       )}
 
-                      {/* Comment Input */}
                       <div className="mt-4 flex">
                         <input
                           type="text"

@@ -9,7 +9,6 @@ const EditStoriesPage = ({ storyId, onClose, onStoryUpdated }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  // Fetch the current story data to pre-fill the form
   useEffect(() => {
     const fetchStoryData = async () => {
       try {
@@ -69,14 +68,13 @@ const EditStoriesPage = ({ storyId, onClose, onStoryUpdated }) => {
       setSuccessMessage(response.data.message);
       setErrorMessage("");
 
-      // Call the onStoryUpdated callback to update the story in the list
       onStoryUpdated({
         _id: storyId,
         title: storyData.title,
         content: storyData.content,
       });
 
-      setTimeout(() => onClose(), 1000); // Close the modal after success
+      setTimeout(() => onClose(), 1000);
     } catch (error) {
       setErrorMessage(
         error.response?.data?.message || "Failed to update the story."

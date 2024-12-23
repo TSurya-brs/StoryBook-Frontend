@@ -16,19 +16,16 @@ function App() {
   const [isAuthor, setIsAuthor] = useState(authorStatus === "true");
   console.log("isAuthor fromapp.jsx which is from localstorage", isAuthor);
 
-  // Function to handle login and update isAuthor status
   const handleAuthorData = (Author) => {
     setIsAuthor(Author);
   };
   console.log("Tatta", isAuthor);
 
-  // Private Route to ensure only logged-in users can access specific routes
   const PrivateRoute = ({ children }) => {
-    const isLoggedIn = localStorage.getItem("authToken"); // Adjust based on your auth mechanism
+    const isLoggedIn = localStorage.getItem("authToken");
     return isLoggedIn ? children : <Navigate to="/login" />;
   };
 
-  // Protected Route to ensure only authors can create stories
   const ProtectedRoute = ({ children }) => {
     console.log("Protected-", isAuthor);
     return isAuthor ? (
@@ -48,18 +45,13 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {/* Public Routes */}
         <Route path="/register" element={<RegisterPage />} />
         <Route
           path="/login"
           element={<LoginPage onLogin={handleAuthorData} />}
         />
-        <Route
-          path="/"
-          element={<Navigate to="/login" />} // This will redirect "/" to "/login"
-        />
+        <Route path="/" element={<Navigate to="/login" />} />
 
-        {/* Protected Routes */}
         <Route
           path="/nav"
           element={
@@ -117,7 +109,6 @@ function App() {
           }
         />
 
-        {/* Create Story Route (Only for Authors) */}
         <Route
           path="/stories/create"
           element={

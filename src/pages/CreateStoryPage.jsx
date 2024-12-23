@@ -37,17 +37,17 @@ const CreateStoryPage = () => {
     try {
       const response = await axios.post(
         "https://storybook-backend-b3ji.onrender.com/api/stories",
-        { title, content }, // Only send title and content
+        { title, content },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include token in headers
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       setSuccessMessage(response.data.message);
       setErrorMessage("");
-      setFormData({ title: "", content: "" }); // Clear form
+      setFormData({ title: "", content: "" });
     } catch (error) {
       console.error("Error saving story:", error);
       setErrorMessage(

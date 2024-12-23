@@ -10,7 +10,6 @@ const StoriesPage = () => {
   const [showComments, setShowComments] = useState(false);
   const [userId, setUserId] = useState("");
 
-  // Fetch all stories
   useEffect(() => {
     const fetchStories = async () => {
       try {
@@ -29,7 +28,6 @@ const StoriesPage = () => {
     if (storedUserId) setUserId(storedUserId);
   }, []);
 
-  // Handle like button click
   const handleLike = async (storyId) => {
     try {
       const response = await axios.post(
@@ -40,9 +38,7 @@ const StoriesPage = () => {
       );
 
       const updatedStories = stories.map((story) =>
-        story._id === storyId
-          ? { ...story, likes: response.data.likes } // Update likes with the value from the backend
-          : story
+        story._id === storyId ? { ...story, likes: response.data.likes } : story
       );
 
       setStories(updatedStories);
@@ -51,13 +47,11 @@ const StoriesPage = () => {
     }
   };
 
-  // Handle comment button click
   const handleComment = (story) => {
     setSelectedStory(story);
     setShowComments(true);
   };
 
-  // Handle adding a new comment
   const handleAddComment = async (storyId) => {
     if (newComment.trim()) {
       try {
@@ -73,7 +67,6 @@ const StoriesPage = () => {
             : story
         );
         setStories(updatedStories);
-        // setSelectedStory(stories);
         if (selectedStory && selectedStory._id === storyId) {
           setSelectedStory({
             ...selectedStory,
@@ -95,7 +88,6 @@ const StoriesPage = () => {
           {stories.length === 0 ? "No stories available" : "All Stories"}
         </h1>
 
-        {/* Stories List */}
         {stories.length === 0 ? (
           <div className="text-center text-gray-500 mt-8">
             No stories available.
@@ -115,7 +107,6 @@ const StoriesPage = () => {
                   Author: {story.author}
                 </p>
 
-                {/* Like Button */}
                 <div className="mt-4 flex items-center space-x-4">
                   <button
                     onClick={() => handleLike(story._id)}
@@ -125,7 +116,6 @@ const StoriesPage = () => {
                     <span>{story.likes}</span>
                   </button>
 
-                  {/* Comments Button */}
                   <button
                     onClick={() => handleComment(story)}
                     className="flex items-center text-green-500 hover:text-green-700"
@@ -139,14 +129,12 @@ const StoriesPage = () => {
           </div>
         )}
 
-        {/* Comment Modal/Tab */}
         {showComments && selectedStory && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-96">
               <h2 className="text-2xl font-semibold mb-4">Comments</h2>
 
               <div className="space-y-4">
-                {/* Display all comments */}
                 <ul>
                   {selectedStory.comments &&
                   selectedStory.comments.length > 0 ? (
@@ -160,7 +148,6 @@ const StoriesPage = () => {
                   )}
                 </ul>
 
-                {/* Add New Comment */}
                 <textarea
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const DeletePage = () => {
-  const { storyId } = useParams(); // Get storyId from the route
+  const { storyId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,14 +19,14 @@ const DeletePage = () => {
           }
         );
         // alert("Story deleted successfully!");
-        navigate("/stories/create"); // Navigate back to the Author Stories page
+        navigate("/stories/create");
       } catch (error) {
         console.error("Error deleting story:", error);
         alert("Failed to delete the story. Try again later.");
       }
     };
 
-    handleDelete(); // Call the delete function as soon as the page loads
+    handleDelete();
   }, [storyId, navigate]);
 
   return <></>;
